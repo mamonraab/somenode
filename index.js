@@ -12,18 +12,12 @@ wetheer().then(
         out = error;
     }
 );
-
+var middleware = undefined;
 //midleware
-var middleware = {
-    requireAuthentication: function(req, res, next) {
-        console.log('private area ');
-        next();
-    },
-    loger: function(req, res, next) {
-        console.log(req.method + '   ' + req.originalUrlm + '   ' + new Date().toString());
-        next();
-    }
-};
+var middleware2 = require('./middleware.js');
+middleware2(function(callback) {
+    middleware = callback;
+});
 // when we use app.use  that mean we use aaplication level middelware
 //that work in all the app route
 app.use(middleware.requireAuthentication);
