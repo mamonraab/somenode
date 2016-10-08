@@ -2,15 +2,26 @@
 var express = require('express');
 var app = express();
 var port = 3000;
+var wetheer = require('./app.js');
+var out = "nothange ";
+wetheer().then(
+    function(data) {
+        out = data;
+    },
+    function(error) {
+        out = error;
+    }
+);
+
 //midleware
 var middleware = {
-    requireAuthentication: function(req , res , next){
- console.log('private area ');
- next();
+    requireAuthentication: function(req, res, next) {
+        console.log('private area ');
+        next();
     },
-    loger: function(req , res , next){
-console.log(req.method + '   ' + req.originalUrlm  + '   ' + new Date().toString());
-next();
+    loger: function(req, res, next) {
+        console.log(req.method + '   ' + req.originalUrlm + '   ' + new Date().toString());
+        next();
     }
 };
 // when we use app.use  that mean we use aaplication level middelware
@@ -22,22 +33,26 @@ to use the  middelware only for spicific route
 
 */
 
-app.get('/me',middleware.loger, function (req , res ){
 
-res.send(" <input type='text' name='mamon' value='axs' />   ");
+app.get('/me', middleware.loger, function(req, res) {
+
+    res.send(" <input type='text' name='mamon' value='axs' />   ");
 
 });
+app.get('/w', function(req, res) {
+    res.send(out);
 
+});
 // starting the http
-app.get('/', function (req , res){
-res.send('hello mamon node js is here new love !!!!!');
+app.get('/', function(req, res) {
+    res.send('hello mamon node js is here new love !!!!!');
 });
 
 
 // making another page
-app.get('/about', function (req , res ){
+app.get('/about', function(req, res) {
 
-res.send(" <input type='text' name='mamon' value='axs' />   ");
+    res.send(" <input type='text' name='mamon' value='axs' />   ");
 
 });
 
@@ -48,6 +63,6 @@ app.use(express.static(__dirname + '/www/v2'))
 
 //port to listin in 
 
-app.listen(port,function(){
-    console.log('mamon express started in port ' + port +' !!!');
+app.listen(port, function() {
+    console.log('mamon express started in port ' + port + ' !!!');
 });
