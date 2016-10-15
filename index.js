@@ -5,14 +5,20 @@ var app = express();
 var port = process.env.PORT || 3000;
 var wetheer = require('./app.js');
 var out = "nothange ";
-wetheer().then(
-    function(data) {
-        out = data;
-    },
-    function(error) {
-        out = error;
-    }
-);
+
+
+app.get('/weather', function(req, res) {
+
+    wetheer().then(
+        function(data) {
+            res.send(data);
+        },
+        function(error) {
+            res.send(error);
+        }
+    );
+});
+
 //midleware
 var middleware = require('./middleware.js');
 
@@ -47,6 +53,8 @@ app.get('/about', function(req, res) {
     res.send(" <input type='text' name='mamon' value='axs' />   ");
 
 });
+
+
 
 // adding floder and its files to be brwse abel
 //you can visit these typing localhost:3000/index.html
