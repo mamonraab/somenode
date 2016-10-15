@@ -1,7 +1,8 @@
 // include the moudle
 var express = require('express');
 var app = express();
-var port = 3000;
+//heroku give use port in process.env.PORT
+var port = process.env.PORT || 3000;
 var wetheer = require('./app.js');
 var out = "nothange ";
 wetheer().then(
@@ -52,7 +53,7 @@ app.get('/about', function(req, res) {
 app.use(express.static(__dirname + '/www/v2'))
 
 
-//port to listin in 
+//port to listin in
 
 app.listen(port, function() {
     console.log('mamon express started in port ' + port + ' !!!');
